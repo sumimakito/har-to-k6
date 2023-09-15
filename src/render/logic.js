@@ -4,10 +4,10 @@ const flow = require('./flow')
 const variableSpace = require('./variableSpace')
 const defaultSleep = require('./defaultSleep')
 
-function logic(result) {
+function logic(result, options) {
   const content = [
     declares(result.declares),
-    variableSpace(result),
+    variableSpace(result, options),
     flow(result),
     defaultSleep(result),
   ].filter(item => item)

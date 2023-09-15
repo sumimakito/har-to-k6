@@ -1,5 +1,8 @@
 const DEFAULT_OPTIONS = {
   addSleep: false,
+
+  /** @type {false | string[]} */
+  externalVariables: false,
 }
 
 const DEFAULT_CLI_OPTIONS = {

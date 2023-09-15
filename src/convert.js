@@ -21,7 +21,7 @@ async function convert(_archives, options = DEFAULT_OPTIONS) {
     const source = normalize(archive, options)
 
     try {
-      validate(source)
+      validate(source, options)
     } catch (error) {
       throw new InvalidArchiveError(
         { name: error.name },
@@ -42,7 +42,7 @@ async function convert(_archives, options = DEFAULT_OPTIONS) {
   // NOTE: => render(result) instead of { main: render(result) } ??
   // Then /bin/har-to-k6.js need to change as well.
   return {
-    main: render(result, imports),
+    main: render(result, imports, options),
   }
 }
 

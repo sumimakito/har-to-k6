@@ -1,7 +1,7 @@
-function imports(spec) {
+function imports(spec, options) {
   if (any(spec)) {
     const lines = []
-    k6(spec, lines)
+    k6(spec, options, lines)
     http(spec, lines)
     k6JsLibs(spec, lines)
     return lines.join(`\n`)
@@ -11,10 +11,10 @@ function imports(spec) {
 }
 
 function any(spec) {
-  return Object.values(spec).find((value) => value)
+  return Object.values(spec).find(value => value)
 }
 
-function k6(spec, lines) {
+function k6(spec, options, lines) {
   const items = []
 
   if (spec.check || spec.group || spec.sleep) {
@@ -27,6 +27,10 @@ function k6(spec, lines) {
     if (spec.group) {
       items.push('group')
     }
+  }
+
+  if (options && Array.isArray(options.externalVariables)) {
+    items.push('exec')
   }
 
   const content = items.join(`, `)

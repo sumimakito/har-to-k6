@@ -37,9 +37,13 @@ const {
  * param fileName: variables defined
  * param contentType: variables defined
  */
-function variableDefined(archive) {
+function variableDefined(archive, options) {
   const entries = orderEntries(archive)
-  const defined = new Set()
+  const defined = new Set(
+    options && Array.isArray(options.externalVariables)
+      ? options.externalVariables
+      : []
+  )
 
   for (let i = 0; i < entries.length; i++) {
     const entry = entries[i]
@@ -193,7 +197,7 @@ function params(node, i, defined) {
 
 function referenced(string) {
   if (string) {
-    return matchVariables(string).map((match) => match[1])
+    return matchVariables(string).map(match => match[1])
   } else {
     return []
   }
@@ -248,7 +252,7 @@ function orderEntries(archive) {
 // eslint-disable-next-line no-unused-vars
 function extractPages(pages) {
   if (pages) {
-    return new Map(pages.map((page) => [page.id, page.index]))
+    return new Map(pages.map(page => [page.id, page.index]))
   } else {
     return new Map()
   }
@@ -256,7 +260,7 @@ function extractPages(pages) {
 
 // eslint-disable-next-line no-unused-vars
 function orderExplicit(entries, pages) {
-  const unordered = entries.filter((entry) => pages.has(entry.pageref))
+  const unordered = entries.filter(entry => pages.has(entry.pageref))
   const groups = groupEntries(unordered)
   const orderedGroups = orderGroupsByIndex(groups, pages)
   return expand(orderedGroups)
@@ -265,7 +269,7 @@ function orderExplicit(entries, pages) {
 // eslint-disable-next-line no-unused-vars
 function orderImplicit(entries, pages) {
   const unordered = entries.filter(
-    (entry) => entry.pageref && !pages.has(entry.pageref)
+    entry => entry.pageref && !pages.has(entry.pageref)
   )
   const groups = groupEntries(unordered)
   const orderedGroups = orderGroupsByName(groups)
@@ -288,13 +292,13 @@ function groupEntries(entries) {
 
 function orderGroupsByIndex(groups, pages) {
   return [...groups]
-    .map((group) => [pages.get(group[0]), group[1]])
+    .map(group => [pages.get(group[0]), group[1]])
     .sort(sort.firstElement)
-    .map((group) => group[1])
+    .map(group => group[1])
 }
 
 function orderGroupsByName(groups) {
-  return [...groups].sort(sort.firstElement).map((group) => group[1])
+  return [...groups].sort(sort.firstElement).map(group => group[1])
 }
 
 function expand(grouped) {

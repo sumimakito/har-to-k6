@@ -1,8 +1,10 @@
 const { FlowItemType } = require('../enum')
 const { UnrecognizedError } = require('../error')
 
-function variableSpace(result) {
-  if (result.flow.find(variableFlowItem)) {
+function variableSpace(result, options) {
+  if (options && Array.isArray(options.externalVariables)) {
+    return `const vars = externalVariables[exec.vu.idInTest] || {};`
+  } else if (result.flow.find(variableFlowItem)) {
     return `const vars = {};`
   } else {
     return null

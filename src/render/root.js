@@ -1,3 +1,4 @@
+const externalVariables = require('./externalVariables')
 const imports = require('./imports')
 const lead = require('./lead')
 const logic = require('./logic')
@@ -7,7 +8,7 @@ const options = require('./options')
  * @param {*|Array<*>} _results
  * @return {string}
  */
-function root(_results, _imports) {
+function root(_results, _imports, _options) {
   const results = Array.isArray(_results) ? _results : [_results]
   const isMultipleResults = results.length > 1
   const [main] = results
@@ -15,7 +16,7 @@ function root(_results, _imports) {
 
   for (const result of results) {
     logicFunctions.push(
-      [isMultipleResults ? lead(result) : null, logic(result)]
+      [isMultipleResults ? lead(result) : null, logic(result, _options)]
         .filter(item => item)
         .join('\n\n')
     )
@@ -23,8 +24,9 @@ function root(_results, _imports) {
 
   return [
     !isMultipleResults ? lead(main) : null,
-    imports(_imports),
+    imports(_imports, _options),
     options(main),
+    externalVariables(_options),
     ...logicFunctions,
   ]
     .filter(item => item)
