@@ -1,7 +1,10 @@
 {
-    "name": "har-to-k6",
+    "name": "@nekopaw/har-to-k6",
     "description": "Convert LI-HAR to k6 script",
     "version": "0.14.4",
+    "publishConfig": {
+        "access": "public"
+    },
     "license": "Apache-2.0",
     "keywords": [
         "k6",
@@ -16,9 +19,9 @@
     "directories": {
         "lib": "src"
     },
-    "homepage": "https://github.com/grafana/har-to-k6",
-    "repository": "github:grafana/har-to-k6",
-    "bugs": "https://github.com/grafana/har-to-k6/issues",
+    "homepage": "https://github.com/sumimakito/har-to-k6",
+    "repository": "github:sumimakito/har-to-k6",
+    "bugs": "https://github.com/sumimakito/har-to-k6/issues",
     "engines": {
         "node": ">=16.0.0"
     },
