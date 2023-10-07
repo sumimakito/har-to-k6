@@ -2,6 +2,8 @@ function imports(spec, options) {
   if (any(spec)) {
     const lines = []
     k6(spec, options, lines)
+    data(options, lines)
+    exec(options, lines)
     http(spec, lines)
     k6JsLibs(spec, lines)
     return lines.join(`\n`)
@@ -29,13 +31,21 @@ function k6(spec, options, lines) {
     }
   }
 
-  if (options && Array.isArray(options.externalVariables)) {
-    items.push('exec')
-  }
-
   const content = items.join(`, `)
   if (items.length > 0) {
     lines.push(`import { ${content} } from "k6";`)
+  }
+}
+
+function data(options, lines) {
+  if (options && Array.isArray(options.externalVariables)) {
+    lines.push(`import data, { SharedArray } from "k6/data";`)
+  }
+}
+
+function exec(options, lines) {
+  if (options && Array.isArray(options.externalVariables)) {
+    lines.push(`import exec from "k6/execution";`)
   }
 }
 

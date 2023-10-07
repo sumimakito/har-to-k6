@@ -3,7 +3,7 @@ const { UnrecognizedError } = require('../error')
 
 function variableSpace(result, options) {
   if (options && Array.isArray(options.externalVariables)) {
-    return `const vars = externalVariables[exec.vu.idInTest] || {};`
+    return `const vars = Object.create(externalVariables[exec.vu.idInTest - 1]) || {};`
   } else if (result.flow.find(variableFlowItem)) {
     return `const vars = {};`
   } else {
