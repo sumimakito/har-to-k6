@@ -1,4 +1,4 @@
-declare module 'har-to-k6' {
+declare module '@nekopaw/har-to-k6' {
   // Standard HAR types
   interface Comment {
     /**
