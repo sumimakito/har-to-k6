@@ -448,7 +448,7 @@ declare module '@nekopaw/har-to-k6' {
      *
      * Must be unique.
      */
-    pageRef?: string
+    pageref?: string
 
     /**
      * Date and time stamp of the request start (ISO 8601 - YYYY-MM-DDThh:mm:ss.sTZD).
@@ -651,18 +651,20 @@ declare module '@nekopaw/har-to-k6' {
 
   export class UnrecognizedError extends HarToK6Error {}
 
+  export interface ConverterOptions {
+    addSleep?: boolean
+    externalVariables: false | string[]
+  }
+
   export function liHARToK6Script(
     har: HAR | Array<HAR>,
-    options?: { addSleep?: boolean }
+    options?: ConverterOptions
   ): Promise<{ main: string }>
 
   /** @throws {InvalidArchiveError} */
   export function validate(archive: HAR): void
 
-  export function normalizeHAR(
-    archive: HAR,
-    options?: { addSleep?: boolean }
-  ): HAR
+  export function normalizeHAR(archive: HAR, options?: ConverterOptions): HAR
 
   export function strToFunctionName(subject: string, fallback?: string): string
 }
