@@ -1,3 +1,5 @@
+import { Options } from 'k6/options'
+
 declare module 'har-to-k6' {
   // Standard HAR types
   interface Comment {
@@ -637,6 +639,7 @@ declare module 'har-to-k6' {
   }
 
   export interface ExtendedLog extends Log {
+    options?: Options
     pages?: ExtendedPage[]
     entries: ExtendedEntry[]
   }
