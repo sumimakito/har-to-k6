@@ -3,6 +3,9 @@ const DEFAULT_OPTIONS = {
 
   /** @type {false | string[]} */
   externalVariables: false,
+
+  /** @type {boolean} */
+  injectExecVariables: false,
 }
 
 const DEFAULT_CLI_OPTIONS = {

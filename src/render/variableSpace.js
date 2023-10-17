@@ -5,10 +5,13 @@ function variableSpace(result, options) {
   if (options && Array.isArray(options.externalVariables)) {
     return `const vars = Object.create(externalVariables[exec.vu.idInTest - 1]) || {};`
   } else if (result.flow.find(variableFlowItem)) {
-    return `const vars = {
-      __vu_iterationInScenario: exec.vu.iterationInScenario,
-      __vu_idInTest: exec.vu.idInTest,
-    };`
+    if (options.injectExecVariables) {
+      return `const vars = {
+        __exec_vu_iterationInScenario: exec.vu.iterationInScenario,
+        __exec_vu_idInTest: exec.vu.idInTest,
+      };`
+    }
+    return `const vars = {};`
   } else {
     return null
   }

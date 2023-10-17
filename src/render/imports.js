@@ -44,7 +44,7 @@ function data(options, lines) {
 }
 
 function exec(options, lines) {
-  if (options && Array.isArray(options.externalVariables)) {
+  if (options && Array.isArray(options.injectExecVariables)) {
     lines.push(`import exec from "k6/execution";`)
   }
 }
