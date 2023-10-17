@@ -5,7 +5,10 @@ function variableSpace(result, options) {
   if (options && Array.isArray(options.externalVariables)) {
     return `const vars = Object.create(externalVariables[exec.vu.idInTest - 1]) || {};`
   } else if (result.flow.find(variableFlowItem)) {
-    return `const vars = {};`
+    return `const vars = {
+      __vu_iterationInScenario: exec.vu.iterationInScenario,
+      __vu_idInTest: exec.vu.idInTest,
+    };`
   } else {
     return null
   }
