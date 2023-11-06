@@ -1,6 +1,6 @@
-import { Options } from 'k6/options'
+declare module '@nekopaw/har-to-k6' {
+  import type { Options } from 'k6/options'
 
-declare module 'har-to-k6' {
   // Standard HAR types
   interface Comment {
     /**
@@ -661,7 +661,9 @@ declare module 'har-to-k6' {
 
   export interface ConverterOptions {
     addSleep?: boolean
-    externalVariables: false | string[]
+    externalOptions?: boolean
+    externalVariables?: false | string[]
+    injectExecVariables?: boolean
   }
 
   export function liHARToK6Script(
