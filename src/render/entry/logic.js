@@ -11,10 +11,10 @@ function logic(spec) {
   ]
 
   if (spec.sleep) {
-    flow = withSleep(flow, spec.sleep)
+    flow = withSleep(flow, spec.sleep, 'entry')
   }
 
-  return flow.filter((item) => item).join(`\n`)
+  return flow.filter(item => item).join(`\n`)
 }
 
 module.exports = logic

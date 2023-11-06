@@ -1,12 +1,21 @@
 const sleep = require('./sleep')
 
-function withSleep(flow, spec) {
+/**
+ *
+ * @param {*} flow
+ * @param {*} spec
+ * @param {'entry' | 'group'} [scope]
+ * @returns
+ */
+function withSleep(flow, spec, scope) {
   const before = spec.filter(({ before }) => before).map(({ before }) => before)
   const after = spec.filter(({ after }) => after).map(({ after }) => after)
 
-  return [...before.map(sleep), ...flow, ...after.map(sleep)].filter(
-    (flowItem) => flowItem
-  )
+  return [
+    ...before.map(s => sleep(s, scope)),
+    ...flow,
+    ...after.map(s => sleep(s, scope)),
+  ].filter(flowItem => flowItem)
 }
 
 module.exports = withSleep

@@ -10,10 +10,10 @@ function group(spec) {
     let flow = [header(spec.page), body(name, spec)]
 
     if (spec.page.sleep) {
-      flow = withSleep(flow, spec.page.sleep)
+      flow = withSleep(flow, spec.page.sleep, 'group')
     }
 
-    return flow.filter((item) => item).join(`\n`)
+    return flow.filter(item => item).join(`\n`)
   } else {
     return body(spec.id, spec)
   }
