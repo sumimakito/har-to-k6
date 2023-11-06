@@ -2,19 +2,30 @@ const { FlowItemType } = require('../enum')
 const { UnrecognizedError } = require('../error')
 
 function variableSpace(result, options) {
-  if (options && Array.isArray(options.externalVariables)) {
-    return `const vars = Object.create(externalVariables[exec.vu.idInTest - 1]) || {};`
-  } else if (result.flow.find(variableFlowItem)) {
-    if (options.injectExecVariables) {
-      return `const vars = {
-        __exec_vu_iterationInScenario: exec.vu.iterationInScenario,
-        __exec_vu_idInTest: exec.vu.idInTest,
-      };`
+  const spread = []
+
+  if (options) {
+    if (Array.isArray(options.externalVariables)) {
+      spread.push('externalVariables[exec.vu.idInTest - 1]')
     }
-    return `const vars = {};`
-  } else {
+
+    if (options.injectExecVariables) {
+      const pairs = []
+      pairs.push('__vuIteration: exec.vu.iterationInScenario')
+      pairs.push('__vuId: exec.vu.idInTest')
+      spread.push(`{ ${pairs.join(', ')} }`)
+    }
+  }
+
+  if (result.flow.find(variableFlowItem)) {
+    spread.unshift('{}')
+  }
+
+  if (spread.length === 0) {
     return null
   }
+
+  return `const vars = Object.assign(${spread.join(', ')});`
 }
 
 function variableFlowItem(item) {
