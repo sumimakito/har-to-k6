@@ -1,10 +1,13 @@
 const DEFAULT_OPTIONS = {
   addSleep: false,
 
-  /** @type {false | string[]} */
+  /** @type {boolean=} */
+  externalOptions: false,
+
+  /** @type {(false | string[])=} */
   externalVariables: false,
 
-  /** @type {boolean} */
+  /** @type {boolean=} */
   injectExecVariables: false,
 }
 

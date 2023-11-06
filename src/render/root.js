@@ -25,7 +25,7 @@ function root(_results, _imports, _options) {
   return [
     !isMultipleResults ? lead(main) : null,
     imports(_imports, _options),
-    options(main),
+    options(main, _options),
     externalVariables(_options),
     ...logicFunctions,
   ]
